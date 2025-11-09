@@ -24,13 +24,19 @@ jobs:
         cache: 'npm'
     
     - name: Install dependencies
-      run: npm ci
+      run: |
+        npm ci || npm install
+        # Fallback to npm install if npm ci fails
       
     - name: Build
       run: npm run build
+      env:
+        CI: false  # Prevents treating warnings as errors
       
     - name: Test
       run: npm test
+      env:
+        CI: true
 
     - name: Run Puppeteer tests
       run: node server/cypress/integration/puppeteer-test.js

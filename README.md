@@ -16,18 +16,32 @@ A secure crypto payment system that allows users to pay rent or make deposits us
 
 ### Clone
 
-```
-   git clone https://gitlab.com/technicalmanager-group/real-esate
-```
-
-### Install dependencies
-
-```
-   npm install
+```bash
+git clone https://gitlab.com/technicalmanager-group/real-esate
 ```
 
-### Run on localhost
+### Standard Setup
 
+Install dependencies:
+```bash
+npm install
 ```
-   npm start
+
+Run locally:
+```bash
+npm start
 ```
+
+### Docker Setup
+
+Build the container:
+```bash
+docker build -t real-estate-app .
+```
+
+Run the container:
+```bash
+docker run -p 3000:3000 real-estate-app
+```
+
+Access the application at: http://localhost:3000
