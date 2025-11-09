@@ -1,0 +1,25 @@
+const puppeteer = require('puppeteer');
+
+(async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  // Set viewport for mobile screen size (e.g., iPhone X)
+  await page.setViewport({ width: 375, height: 812 });
+
+  // Go to the website running locally
+  await page.goto('http://localhost:3000');  // Local server
+
+  // Perform checks for mobile responsiveness
+  const isResponsive = await page.evaluate(() => {
+    return window.innerWidth === 375 && window.innerHeight === 812;
+  });
+
+  if (isResponsive) {
+    console.log('Mobile viewport works correctly.');
+  } else {
+    console.log('Viewport mismatch detected!');
+  }
+
+  await browser.close();
+})();

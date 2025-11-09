@@ -1,0 +1,30 @@
+describe('Real Estate Search and Filter Tests', () => {
+  it('should return accurate search results', () => {
+    cy.visit('http://localhost:3000'); // Local server
+
+    // Simulate a user typing in the search box
+    cy.get('input[placeholder="Search"]').type('apartment');
+    cy.get('button[type="submit"]').click();
+
+    // Check that the results match the search query
+    cy.get('.property-list').should('contain', 'apartment');
+  });
+
+  it('should filter properties by price range', () => {
+    cy.visit('http://localhost:3000'); // Local server
+    
+    // Apply filter for price range
+    cy.get('[data-test="filter-price"]').type('100000-200000');
+    cy.get('.property-list').each((property) => {
+      cy.wrap(property).should('contain', '100000');
+    });
+  });
+
+  it('should sort properties by price low to high', () => {
+    cy.visit('http://localhost:3000'); // Local server
+    
+    // Apply sorting option
+    cy.get('[data-test="sort-price"]').select('Price Low to High');
+    cy.get('.property-list').first().should('contain', 'Low Price');
+  });
+});

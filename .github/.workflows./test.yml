@@ -1,0 +1,46 @@
+name: Real Estate Project Testing
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Start the Application
+        run: |
+          npm run start & # Start the app in the background
+          sleep 10 # Wait for the app to start (adjust based on your app's start time)
+
+      - name: Install Puppeteer for Mobile Responsiveness
+        run: npm install puppeteer
+
+      - name: Run Puppeteer for Mobile Responsiveness
+        run: node puppeteer-test.js
+
+      - name: Install Cypress for UI Testing
+        run: npm install cypress
+
+      - name: Run Cypress Tests
+        run: npx cypress run --spec "cypress/integration/search_filter_spec.js"
+
+      - name: Run Lighthouse CI for Performance
+        run: |
+          npx lighthouse-ci --url=http://localhost:3000 --config-path=lighthouse-config.json

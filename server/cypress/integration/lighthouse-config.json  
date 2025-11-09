@@ -1,0 +1,21 @@
+{
+  "ci": {
+    "collect": {
+      "url": [
+        "http://localhost:3000"
+      ],
+      "numberOfRuns": 1,
+      "settings": {
+        "emulatedFormFactor": "desktop",
+        "onlyCategories": ["performance", "accessibility", "seo"]
+      }
+    },
+    "assert": {
+      "assertions": {
+        "performance": ["error", {"maxScore": 0.8}],
+        "accessibility": ["warn", {"minScore": 0.9}],
+        "seo": ["warn", {"minScore": 0.8}]
+      }
+    }
+  }
+}
